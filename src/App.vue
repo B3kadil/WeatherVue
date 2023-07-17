@@ -1,47 +1,28 @@
-<script setup>
-import HelloWorld from './components/HelloWorld.vue'
-import TheWelcome from './components/TheWelcome.vue'
+<script>
+
 </script>
 
 <template>
-  <header>
-    <img alt="Vue logo" class="logo" src="./assets/logo.svg" width="125" height="125" />
-
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
-    </div>
-  </header>
-
-  <main>
-    <TheWelcome />
-  </main>
+  <div class="wrapper">
+      <h1>Погодное приложенме</h1>
+      <p>Узнать погоду в вашем городе</p>
+  </div>
 </template>
 
 <style scoped>
-header {
-  line-height: 1.5;
+.wrapper{
+    width: 900px;
+    height: 500px;
+    border-radius: 50px;
+    background: linear-gradient(135deg, #0044da, #9400b4);
+    padding: 20px;
+    color: #fff;
+    text-align: center;
 }
-
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
+.wrapper h1{
+    margin-top: 50px;
 }
-
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-  }
-
-  .logo {
-    margin: 0 2rem 0 0;
-  }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
+.wrapper p{
+    margin-top: 20px;
 }
 </style>
