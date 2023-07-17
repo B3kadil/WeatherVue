@@ -1,21 +1,39 @@
 <script>
+import axios from "axios";
+
 export default {
     data: () => ({
-        Title:'Погодное приложение',
-        city:'',
-        error:''
+        Title: 'Погодное приложение',
+        city: '',
+        error: '',
+        info: null
     }),
-    methods:{
-        getWeather(){
-            if(this.city.trim().length<2){
-               this.error = 'Нужно название более одного символа'
+    methods: {
+        getWeather() {
+            if (this.city.trim().length < 2) {
+                this.error = 'Нужно название более одного символа'
                 return false
             }
+            this.error = ''
+            axios.get(`https://api.openweathermap.org/data/2.5/weather?q=${this.city}&units=metric&appid=735bb03774533f37710a31f65f3dda66`)
+                .then(res => (this.info = res.data))
         }
     },
-    computed:{
-        cityName(){
-            return '"'+this.city+'"'
+    computed: {
+        cityName() {
+            return '"' + this.city + '"'
+        },
+        showTemp() {
+            return "Температура: " + this.info.main.temp + '°C'
+        },
+        showFeelsLike() {
+            return "Ощущается как: " + this.info.main.feels_like + '°C'
+        },
+        showMinTemp() {
+            return "Минимальная температура: " + this.info.main.temp_min + '°C'
+        },
+        showMaxTemp() {
+            return "Максимальная температура: " + this.info.main.temp_max + '°C'
         }
     }
 }
@@ -23,25 +41,34 @@ export default {
 
 <template>
     <div class="wrapper">
-        <h1>{{Title}}</h1>
-        <p>Узнать погоду в {{city==""?"вашем городе":cityName}}</p>
+        <h1>{{ Title }}</h1>
+        <p>Узнать погоду в {{ city == "" ? "вашем городе" : cityName }}</p>
         <input
-            v-model="city"
-            @keydown.enter="getWeather()"
-            type="text" name="" id="" placeholder="Введите название города">
+                v-model="city"
+                @keydown.enter="getWeather()"
+                type="text" name="" id="" placeholder="Введите название города">
         <button
-            v-show="city!==''"
-            @click="getWeather()"
-        >Получить погоду</button>
-        <p class="error">{{error}}</p>
+                v-show="city!==''"
+                @click="getWeather()"
+        >Получить погоду
+        </button>
+        <p class="error">{{ error }}</p>
+
+        <div v-if="info!=null">
+            <p>{{ showTemp }}</p>
+            <p>{{ showFeelsLike }}</p>
+            <p>{{ showMinTemp }}</p>
+            <p>{{ showMaxTemp }}</p>
+        </div>
     </div>
 </template>
 
 <style scoped>
-.error{
+.error {
     color: #d03939;
     font-size: 14px;
 }
+
 .wrapper {
     width: 900px;
     height: 500px;
